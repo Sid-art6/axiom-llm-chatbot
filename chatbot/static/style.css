@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+ 
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: #07070f;
+    color: #c7c7e0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ 
+/* ── Scanline animation ── */
+@keyframes scan {
+    0%   { opacity: 0.2; }
+    50%  { opacity: 1;   }
+    100% { opacity: 0.2; }
+}
+ 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0);   }
+}
+ 
+/* ── Main Container ── */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    max-width: 1100px;
+    background: #0a0a0f;
+    border-left: 1px solid rgba(99, 102, 241, 0.15);
+    border-right: 1px solid rgba(99, 102, 241, 0.15);
+    overflow: hidden;
+}
+ 
+/* ── Header ── */
+.chat-header {
+    background: #0d0d1a;
+    border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+ 
+.chat-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(99,102,241,0.6), transparent);
+    animation: scan 3s linear infinite;
+}
+ 
+h1 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    background: linear-gradient(90deg, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+ 
+/* Online badge */
+.chat-header::before {
+    content: '● ONLINE';
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    border-radius: 20px;
+    padding: 3px 12px;
+    position: absolute;
+    right: 28px;
+}
+ 
+/* ── Chat Box ── */
+.chat-box {
+    flex: 1;
+    padding: 24px 28px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #0a0a0f;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99,102,241,0.3) transparent;
+}
+ 
+.chat-box::-webkit-scrollbar { width: 4px; }
+.chat-box::-webkit-scrollbar-track { background: transparent; }
+.chat-box::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 4px; }
+ 
+/* ── Messages ── */
+.chat-message {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    animation: fadeIn 0.25s ease;
+}
+ 
+.user-message {
+    flex-direction: row-reverse;
+}
+ 
+/* Avatar circles */
+.chat-message::before {
+    content: 'AI';
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(99,102,241,0.1);
+    border: 1px solid rgba(99,102,241,0.35);
+    color: #818cf8;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+ 
+.user-message::before {
+    content: 'U';
+    background: rgba(124,58,237,0.12);
+    border-color: rgba(124,58,237,0.4);
+    color: #c084fc;
+}
+ 
+/* Bubbles */
+.message-content {
+    max-width: 70%;
+    padding: 10px 16px;
+    font-size: 14px;
+    line-height: 1.65;
+    border-radius: 16px;
+}
+ 
+.bot-message .message-content {
+    background: #13131f;
+    border: 1px solid rgba(99,102,241,0.2);
+    color: #c7c7e0;
+    border-radius: 16px 16px 16px 4px;
+}
+ 
+.user-message .message-content {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    border: none;
+    border-radius: 16px 16px 4px 16px;
+}
+ 
+/* ── Input Area ── */
+.message-input-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background: #0d0d1a;
+    border-top: 1px solid rgba(99,102,241,0.2);
+}
+ 
+textarea {
+    flex: 1;
+    background: #13131f;
+    border: 1px solid rgba(99,102,241,0.25);
+    border-radius: 24px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #c7c7e0;
+    resize: none;
+    outline: none;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+}
+ 
+textarea::placeholder { color: rgba(199,199,224,0.35); }
+ 
+textarea:focus { border-color: rgba(99,102,241,0.6); }
+ 
+button {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 0 0 0 rgba(99,102,241,0);
+    margin: 0;
+    padding: 0;
+}
+ 
+button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 16px rgba(99,102,241,0.45);
+}
+ 
+button:active { transform: scale(0.96); }
+ 
+/* ── Code Blocks ── */
+pre {
+    background: #0f0f1c;
+    border: 1px solid rgba(99,102,241,0.2);
+    border-left: 3px solid #6366f1;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 8px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-size: 13px;
+    color: #a78bfa;
+    font-family: 'Fira Code', 'Consolas', monospace;
+}
+ 
+code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 13px;
+    color: #a78bfa;
+    background: rgba(99,102,241,0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
